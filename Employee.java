@@ -12,7 +12,7 @@ public class Employee {
 
     private void addVideoHelper(Video video){
         if(validateVideo(video)){
-            videolist.put(video.getMovieTitle(), video.getBarcode());
+            videolist.put(video.getMovieTitle(), video.getBarcode() );
         }
     }
 

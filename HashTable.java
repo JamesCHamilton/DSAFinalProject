@@ -26,7 +26,9 @@ public class HashTable {
                 if (bucket != null){
                     for(HashNode node : bucket){
                         if(node != null){
-                           put(node.key, node.value);
+                            for (int i = 0; i< node.valueCount; i++){
+                                put(node.key, node.values[i]);
+                            }
                             
                         }
                     }
@@ -34,6 +36,7 @@ public class HashTable {
             }
         }
     }
+
     
     //Average case = O(1) Worst = O(n)
     public void put(String key, Object value){
@@ -49,10 +52,10 @@ public class HashTable {
 
         //if key already exists update preexisting value for key
 
-        for (int i = 0; i < table[index].length; i++) {
-            if (table[index][i].key.equals(key)) {
-                table[index][i].value = value;
-                
+        for( int i = 0; i < table[index].length; i++){
+            if(table[index][i].key.equals(key)){
+                table[index][i].addValue(value);
+                return;
             }
         }
 
@@ -67,13 +70,17 @@ public class HashTable {
     }
 
     //Average case = O(1) Worst = O(n)
-    public Object get(String key){
+    public Object[] get(String key){
         int index = hash(key);
 
         if(table[index] != null){
             for(HashNode node : table[index]){
                 if(node.key.equals(key)){
-                    return node.value;
+                    Object[] result = new Object[node.valueCount];
+                    for(int i =0; i<node.valueCount; i++){
+                        result[i] = node.values[i];
+                    }
+                    return result;
                 }
             }
         }
@@ -126,14 +133,20 @@ public class HashTable {
             if (table[i] != null) {
                 for (HashNode node : table[i]) {
                     System.out.print("(" + node.key + " -> ");
-                    for (String val : (String[]) node.value) {
-                        System.out.print(val + " ");
+                    Object val = node.values[i];
+                    if(val instanceof int[]){
+                        for (int value :(int[]) val){
+                            System.out.print(value + " ");
+                        }
+                    }else if(val instanceof String[]){
+                        for(String value : (String[]) val){
+                            System.out.print(value + " ");
+                        }
                     }
-                    System.out.print(") ");
                 }
+                System.out.print(")");
             }
-            System.out.println();
         }
-    }
-
+        System.out.println();
+    }   
 }
