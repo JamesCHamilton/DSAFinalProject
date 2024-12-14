@@ -1,7 +1,5 @@
 package DSAFinalProject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Customer {
@@ -10,7 +8,8 @@ public class Customer {
     private String lastName;
     private final int MAXRENTABLEMOVIES = 3;
     int moviesOwned = 0;
-    Map<String,Integer> ownedMovies = new HashMap<String, Integer>();
+    HashTable ownedMovies = new HashTable();
+    
 
     public Customer(int phoneNumber, String firstName, String lastName){
         this.phoneNumber = phoneNumber;
@@ -23,7 +22,7 @@ public class Customer {
     private void rentHelper(Video video){
         if(moviesOwned < MAXRENTABLEMOVIES){
             Scanner scanner = new Scanner(System.in);
-            
+
 
 
 
