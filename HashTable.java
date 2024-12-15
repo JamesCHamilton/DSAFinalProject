@@ -168,14 +168,28 @@ public class HashTable {
 
     //O(n)
     public String[] keys() {
-        ArrayList<String> keyList = new ArrayList<>();
+        int count = 0;
+    
+        // First, count the total number of keys
+        for (HashNode[] bucket : table) {
+            if (bucket != null) {
+                count += bucket.length; // Each bucket contains all nodes with keys
+            }
+        }
+    
+        // Create an array to hold the keys
+        String[] keyArray = new String[count];
+        int index = 0;
+    
+        // Populate the array with keys
         for (HashNode[] bucket : table) {
             if (bucket != null) {
                 for (HashNode node : bucket) {
-                    keyList.add(node.key);
+                    keyArray[index++] = node.key;
                 }
             }
         }
-        return keyList.toArray(new String[0]);
-    }
+    
+        return keyArray;
+    }    
 }
