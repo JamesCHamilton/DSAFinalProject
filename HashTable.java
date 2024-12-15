@@ -1,6 +1,5 @@
 package DSAFinalProject;
 
-import java.util.ArrayList;
 
 //Worst case for the methods is if resizing has to occur
 
