@@ -13,6 +13,7 @@ public class HashNode {
     }
 
 
+    // Average case = O(1), Worst case = O(n)
     void addValue(Object value){
         if(valueCount == values.length){
             Object[] newValues = new Object[values.length+ 1];

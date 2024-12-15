@@ -1,5 +1,7 @@
 package DSAFinalProject;
 
+import java.util.ArrayList;
+
 //Worst case for the methods is if resizing has to occur
 
 public class HashTable {
@@ -149,4 +151,32 @@ public class HashTable {
         }
         System.out.println();
     }   
+
+    // Average case = O(1), Worst case = O(n)
+    public boolean find(String key) {
+        int index = hash(key);
+
+        if (table[index] != null) {
+            for (HashNode node : table[index]) {
+                if (node.key.equals(key)) {
+                    return true; // Return the HashNode containing the key
+                }
+            }
+        }
+        return false; 
+    }
+
+
+    //O(n)
+    public String[] keys() {
+        ArrayList<String> keyList = new ArrayList<>();
+        for (HashNode[] bucket : table) {
+            if (bucket != null) {
+                for (HashNode node : bucket) {
+                    keyList.add(node.key);
+                }
+            }
+        }
+        return keyList.toArray(new String[0]);
+    }
 }
