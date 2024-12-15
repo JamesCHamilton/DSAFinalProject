@@ -6,6 +6,7 @@ public class Employee {
     public boolean isValidTitle(Video video){return titleValidatorHelper(video);}
     public boolean isValidBarcode(Video video){return barcodeValidator(video);}
     public boolean validateVideo(Video video){return validateVideoHelper(video);}
+    public void videos(){printVideos();}
 
 
     HashTable videolist = new HashTable();
@@ -35,6 +36,11 @@ public class Employee {
             return true;
         }
         return false;
+    }
+
+    private void printVideos(){
+        videolist.printTable();
+
     }
     
 }
