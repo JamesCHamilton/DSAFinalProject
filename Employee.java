@@ -9,6 +9,7 @@ public class Employee {
     public boolean isValidBarcode(Video video){return barcodeValidator(video);}
     public boolean validateVideo(Video video){return validateVideoHelper(video);}
     public boolean phoneNumberValidator(long phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
+    public boolean isNumberValid(long phoneNumber){return isValidPhoneNumberHelper(phoneNumber);}
     public String searchForRenter(String movieTitle){return searchRenterHelper(movieTitle);}
 
 
@@ -61,6 +62,10 @@ public class Employee {
     //O(1) for average case, O(n) for worst case
     private boolean phoneNumberValidatorHelper(long phoneNumber){
         return customerList.containsKey(String.valueOf(phoneNumber));
+    }
+
+    private boolean isValidPhoneNumberHelper(long phoneNumber){
+        return Long.toString(phoneNumber).length() == 10; 
     }
 
     //O(n+m)

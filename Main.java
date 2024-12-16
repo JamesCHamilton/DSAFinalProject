@@ -90,7 +90,7 @@ public class Main {
                 switch (employeeChoice) {
                     case 1: // Add a Customer
                         System.out.print("Enter phone number: ");
-                        int phoneNumber = scanner.nextInt();
+                        long phoneNumber = scanner.nextLong();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter first name: ");
                         String firstName = scanner.nextLine();
