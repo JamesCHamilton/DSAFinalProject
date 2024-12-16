@@ -32,7 +32,7 @@ public class Main {
                         System.out.print("Enter the video barcode: ");
                         String movieBarcode = scanner.nextLine();
 
-                        if (employee.phoneNumberValidator(phoneNumber)) {
+                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(choice)) {
                             if (employee.videolist.containsKey(movieBarcode)) {
                                 Video videoToRent = new Video(
                                     (String) employee.videolist.get(movieBarcode)[0], 
@@ -55,7 +55,7 @@ public class Main {
                         System.out.print("Enter the video barcode: ");
                         movieBarcode = scanner.nextLine();
 
-                        if (employee.phoneNumberValidator(phoneNumber)) {
+                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(phoneNumber)) {
                             Customer customer = (Customer) employee.customerList.get(String.valueOf(phoneNumber))[0];
                             Video videoToReturn = new Video((String) customer.ownedMovies.get(movieBarcode)[0],movieBarcode);
                             customer.returnMovie(videoToReturn, phoneNumber, movieBarcode);
