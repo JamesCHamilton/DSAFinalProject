@@ -32,12 +32,11 @@ public class Main {
             System.out.println("2. Return a Video");
             System.out.println("3. Check movies owned");
             System.out.println("4. View Available Videos");
-            System.out.println("5. View Customers");
-            System.out.println("6. Exit");
+            System.out.println("5. Exit");
 
 
             String choice = scanner.nextLine();
-            if (choice.equals("6")) break;
+            if (choice.equals("5")) break;
 
             System.out.print("Enter your phone number: ");
             String phoneNumber = scanner.nextLine();
@@ -64,9 +63,12 @@ public class Main {
                 } else if (choice.equals("3")) {
                     System.out.println("Rented Videos:");
                     customer.printOwnedMovies();
+                }else if (choice.equals("4")) {
+                    System.out.println("Available Videos:");
+                    employee.videos();
+                } else {
+                    System.out.println("Invalid phone number.");
                 }
-            } else {
-                System.out.println("Invalid phone number.");
             }
         }
     }
@@ -77,10 +79,12 @@ public class Main {
             System.out.println("1. Add a Customer");
             System.out.println("2. Add a Video");
             System.out.println("3. Search for a Movie Renter");
-            System.out.println("4. Exit");
+            System.out.println("4. View Available Videos");
+            System.out.println("5. View Customers");
+            System.out.println("6. Exit");
 
             String choice = scanner.nextLine();
-            if (choice.equals("4")) break;
+            if (choice.equals("6")) break;
 
             if (choice.equals("1")) {
                 System.out.print("Enter phone number: ");

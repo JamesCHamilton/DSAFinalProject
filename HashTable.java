@@ -1,5 +1,6 @@
 package DSAFinalProject;
 
+import java.util.Arrays;
 
 //Worst case for the methods is if resizing has to occur
 
@@ -130,25 +131,14 @@ public class HashTable {
     //O(n+m)
     public void printTable() {
         for (int i = 0; i < table.length; i++) {
-            System.out.print("Video " + i + ": ");
-            if (table[i] != null) {
-                for (HashNode node : table[i]) {
-                    System.out.print("(" + node.key + " -> ");
-                    Object val = node.values[i];
-                    if(val instanceof int[]){
-                        for (int value :(int[]) val){
-                            System.out.print(value + " ");
-                        }
-                    }else if(val instanceof String[]){
-                        for(String value : (String[]) val){
-                            System.out.print(value + " ");
-                        }
+            if (table[i] != null) { 
+                for (HashNode node : table[i]) { 
+                    if (node != null) { 
+                        System.out.println("Key: " + node.key + ", Values: " + Arrays.toString(node.values));
                     }
                 }
-                System.out.print(")");
             }
         }
-        System.out.println();
     }   
 
     // Average case = O(1), Worst case = O(n)
