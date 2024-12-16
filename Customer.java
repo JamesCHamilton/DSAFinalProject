@@ -27,7 +27,7 @@ public class Customer {
             return;
         }
 
-            if(moviesOwned < MAXRENTABLEMOVIES){
+            if(moviesOwned > MAXRENTABLEMOVIES && employee.doesVideoExists(video.getBarcode())){
                 if(employee.videolist.containsKey(video.getBarcode())){
                     ownedMovies.put(video.getBarcode(), video.getMovieTitle());
                     employee.videolist.remove(video.getBarcode());
@@ -45,8 +45,9 @@ public class Customer {
     //O(n)
     private void returnHelepr(Video video){
             if(ownedMovies.containsKey(video.getBarcode())){
+                String movieTitle = (String) ownedMovies.get(video.getBarcode())[0];
                 ownedMovies.remove(video.getBarcode());
-                employee.videolist.put(video.getBarcode(), video.getMovieTitle());
+                employee.addVideo(new Video(movieTitle, video.getBarcode()));;
                 System.out.printf("You have returned %s, Thank you", video.getMovieTitle());
                 moviesOwned--;
             }else{

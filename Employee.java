@@ -5,24 +5,26 @@ public class Employee {
     public void addCustomer(String phoneNumber, String firstName, String lastName){addCustomerHelper(phoneNumber, firstName, lastName);}
     public void addVideo(Video video){addVideoHelper(video);}    
     public void videos(){printVideos();}
+    public void customers(){printCustomers();}
     public boolean isValidTitle(String movieTitle){return titleValidatorHelper(movieTitle);}
     public boolean isValidBarcode(String barcode){return barcodeValidator(barcode);}
     public boolean validateVideo(Video video){return validateVideoHelper(video);}
     public boolean phoneNumberValidator(String phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
-    public boolean isNumberValid(String phoneNumber){return isValidPhoneNumberHelper(phoneNumber);}
+    public boolean doesVideoExists(String barcode){return videoExists(barcode);}
     public String searchForRenter(String movieTitle){return searchRenterHelper(movieTitle);}
     public String getVideoTitle(String barcode){return videoTitle(barcode);}
     public Customer getCustomer(String phoneNumber){return customerFetcher(phoneNumber);}
     
     
     
-        HashTable videolist = new HashTable();
+    HashTable videolist = new HashTable();
     HashTable customerList = new HashTable();
 
     //O(1) for average case, O(n) for worst case
     private void addVideoHelper(Video video){
         if(validateVideo(video)){
             videolist.put(video.getBarcode(), video.getMovieTitle());
+            System.out.println("Successfully added a video");
         }
     }
     //O(m) m = movieTitle length 
@@ -50,26 +52,28 @@ public class Employee {
         videolist.printTable();
     }
 
+    //O(n+m)
+    private void printCustomers(){
+        customerList.printTable();
+    }
+
+    private boolean videoExists(String barcode){
+        return videolist.containsKey(barcode);
+    }
+
     //O(1) for average case, O(n) for worst case
     private void addCustomerHelper(String phoneNumber, String firstName, String lastName){
         if (customerList.containsKey(phoneNumber)) {
             System.out.println("Customer with this phone number already exists.");
             return;
         }
-        if(isNumberValid(phoneNumber) == false){
-            System.out.println("Not a valid 10 digit phone number");
-            return;
-        }
         customerList.put(phoneNumber.trim(), new Customer(phoneNumber, firstName, lastName));
+        System.out.println("Successfully added customer");
         
     }
     //O(1) for average case, O(n) for worst case
     private boolean phoneNumberValidatorHelper(String phoneNumber){
         return customerList.containsKey(phoneNumber);
-    }
-
-    private boolean isValidPhoneNumberHelper(String phoneNumber){
-        return phoneNumber.length() == 10; 
     }
 
     //O(n+m)
@@ -104,10 +108,10 @@ public class Employee {
         return null;
     }
     private Customer customerFetcher(String phoneNumber) {
-        Object[] customerData = customerList.get(phoneNumber);
-        if (customerData != null && customerData[0] instanceof Customer) {
-            return (Customer) customerData[0];
+        if (customerList.containsKey(phoneNumber)) {
+            return (Customer) customerList.get(phoneNumber)[0];
         }
         return null;
+
     }
 }
