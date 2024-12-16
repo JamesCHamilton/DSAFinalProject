@@ -8,137 +8,138 @@ public class Main {
         Employee employee = new Employee();
 
         System.out.println("Welcome to the Video Rental System!");
-        System.out.println("Enter (1) if you are a Customer, (2) if you are an Employee, or ANYTHING else to exit:");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        while (true) { // Main Menu Loop
+            System.out.println("\nEnter (1) if you are a Customer, (2) if you are an Employee, or ANYTHING else to exit:");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-        if (choice == 1) { // Customer Menu
-            while (true) {
-                System.out.println("\nCustomer Menu:");
-                System.out.println("1. Rent a Video");
-                System.out.println("2. Return a Video");
-                System.out.println("3. Exit");
-                System.out.print("Enter your choice: ");
+            if (choice == 1) { // Customer Menu
+                boolean customerExit = false; // Flag for exiting Customer Menu
+                while (!customerExit) {
+                    System.out.println("\nCustomer Menu:");
+                    System.out.println("1. Rent a Video");
+                    System.out.println("2. Return a Video");
+                    System.out.println("3. Exit");
+                    System.out.print("Enter your choice: ");
 
-                int customerChoice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                    int customerChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
 
-                switch (customerChoice) {
-                    case 1: // Rent a Video
-                        System.out.print("Enter your phone number: ");
-                        String phoneNumber = scanner.nextLine();
-                        scanner.nextLine(); // Consume newline
-                        System.out.print("Enter the video barcode: ");
-                        String movieBarcode = scanner.nextLine();
+                    switch (customerChoice) {
+                        case 1: // Rent a Video
+                            System.out.print("Enter your phone number: ");
+                            String phoneNumber = scanner.nextLine();
+                            scanner.nextLine(); // Consume newline
+                            System.out.print("Enter the video barcode: ");
+                            String movieBarcode = scanner.nextLine();
 
-                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(phoneNumber)) {
-                            if (employee.videolist.containsKey(movieBarcode)) {
-                                Video videoToRent = new Video(
-                                    (String) employee.videolist.get(movieBarcode)[0], 
-                                    movieBarcode
-                                );
-                                Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
-                                customer.rent(videoToRent, phoneNumber, movieBarcode);
+                            if (employee.phoneNumberValidator(phoneNumber)) {
+                                if (employee.videolist.containsKey(movieBarcode)) {
+                                    Video videoToRent = new Video(
+                                            (String) employee.videolist.get(movieBarcode)[0], movieBarcode);
+                                    Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
+                                    customer.rent(videoToRent, phoneNumber, movieBarcode);
+                                } else {
+                                    System.out.println("The video does not exist in the system.");
+                                }
                             } else {
-                                System.out.println("The video does not exist in the system.");
+                                System.out.println("Invalid phone number. Please ensure you are registered.");
                             }
-                        } else {
-                            System.out.println("Invalid phone number. Please ensure you are registered.");
-                        }
-                        break;
+                            break;
 
-                    case 2: // Return a Video
-                        System.out.print("Enter your phone number: ");
-                        phoneNumber = scanner.nextLine();
-                        scanner.nextLine(); // Consume newline
-                        System.out.print("Enter the video barcode: ");
-                        movieBarcode = scanner.nextLine();
+                        case 2: // Return a Video
+                            System.out.print("Enter your phone number: ");
+                            phoneNumber = scanner.nextLine();
+                            scanner.nextLine(); // Consume newline
+                            System.out.print("Enter the video barcode: ");
+                            movieBarcode = scanner.nextLine();
 
-                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(phoneNumber)) {
-                            Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
-                            Video videoToReturn = new Video((String) customer.ownedMovies.get(movieBarcode)[0],movieBarcode);
-                            customer.returnMovie(videoToReturn, phoneNumber, movieBarcode);
-                        } else {
-                            System.out.println("Invalid phone number or no rented video matches the barcode.");
-                        }
-                        break;
+                            if (employee.phoneNumberValidator(phoneNumber)) {
+                                Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
+                                Video videoToReturn = new Video(
+                                        (String) customer.ownedMovies.get(movieBarcode)[0], movieBarcode);
+                                customer.returnMovie(videoToReturn, phoneNumber, movieBarcode);
+                            } else {
+                                System.out.println("Invalid phone number or no rented video matches the barcode.");
+                            }
+                            break;
 
-                    case 3: // Exit
-                        System.out.println("Thank you for visiting our shop!");
-                        scanner.close();
-                        System.exit(0);
-                        break;
+                        case 3: // Exit Customer Menu
+                            System.out.println("Returning to the main menu...");
+                            customerExit = true;
+                            break;
 
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                        break;
+                        default:
+                            System.out.println("Invalid option. Please try again.");
+                            break;
+                    }
                 }
-            }
-        } else if (choice == 2) { // Employee Menu
-            while (true) {
-                System.out.println("\nEmployee Menu:");
-                System.out.println("1. Add a Customer");
-                System.out.println("2. Add a Video");
-                System.out.println("3. Search who rented a video");
-                System.out.println("4. Exit");
-                System.out.print("Enter your choice: ");
+            } else if (choice == 2) { // Employee Menu
+                boolean employeeExit = false; // Flag for exiting Employee Menu
+                while (!employeeExit) {
+                    System.out.println("\nEmployee Menu:");
+                    System.out.println("1. Add a Customer");
+                    System.out.println("2. Add a Video");
+                    System.out.println("3. Search who rented a video");
+                    System.out.println("4. Exit");
+                    System.out.print("Enter your choice: ");
 
-                int employeeChoice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                    int employeeChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
 
-                switch (employeeChoice) {
-                    case 1: // Add a Customer
-                        System.out.print("Enter phone number: ");
-                        String phoneNumber = scanner.nextLine();
-                        scanner.nextLine(); // Consume newline
-                        System.out.print("Enter first name: ");
-                        String firstName = scanner.nextLine();
-                        System.out.print("Enter last name: ");
-                        String lastName = scanner.nextLine();
+                    switch (employeeChoice) {
+                        case 1: // Add a Customer
+                            System.out.print("Enter phone number: ");
+                            String phoneNumber = scanner.nextLine();
+                            scanner.nextLine(); // Consume newline
+                            System.out.print("Enter first name: ");
+                            String firstName = scanner.nextLine();
+                            System.out.print("Enter last name: ");
+                            String lastName = scanner.nextLine();
 
-                        employee.addCustomer(phoneNumber, firstName, lastName);
-                        System.out.println("Customer added successfully!");
-                        break;
+                            employee.addCustomer(phoneNumber, firstName, lastName);
+                            System.out.println("Customer added successfully!");
+                            break;
 
-                    case 2: // Add a Video
-                        System.out.print("Enter video title: ");
-                        String videoTitle = scanner.nextLine();
-                        System.out.print("Enter video barcode (12 digits): ");
-                        String barcode = scanner.nextLine();
+                        case 2: // Add a Video
+                            System.out.print("Enter video title: ");
+                            String videoTitle = scanner.nextLine();
+                            System.out.print("Enter video barcode (12 digits): ");
+                            String barcode = scanner.nextLine();
 
-                        Video newVideo = new Video(videoTitle, barcode);
-                        if (employee.validateVideo(newVideo)) {
-                            employee.addVideo(newVideo);
-                            System.out.println("Video added successfully!");
-                        } else {
-                            System.out.println("Invalid video details. Please check the title and barcode.");
-                        }
-                        break;
+                            Video newVideo = new Video(videoTitle, barcode);
+                            if (employee.validateVideo(newVideo)) {
+                                employee.addVideo(newVideo);
+                                System.out.println("Video added successfully!");
+                            } else {
+                                System.out.println("Invalid video details. Please check the title and barcode.");
+                            }
+                            break;
 
-                    case 3: // Search who rented a video
-                        System.out.print("Enter the video title: ");
-                        String searchTitle = scanner.nextLine();
+                        case 3: // Search who rented a video
+                            System.out.print("Enter the video title: ");
+                            String searchTitle = scanner.nextLine();
 
-                        String renter = employee.searchForRenter(searchTitle);
-                        System.out.println(renter);
-                        break;
+                            String renter = employee.searchForRenter(searchTitle);
+                            System.out.println(renter);
+                            break;
 
-                    case 4: // Exit
-                        System.out.println("Goodbye!");
-                        scanner.close();
-                        System.exit(0);
-                        break;
+                        case 4: // Exit Employee Menu
+                            System.out.println("Returning to the main menu...");
+                            employeeExit = true;
+                            break;
 
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                        break;
+                        default:
+                            System.out.println("Invalid option. Please try again.");
+                            break;
+                    }
                 }
+            } else { // Exit the system
+                System.out.println("Exiting the system. Goodbye!");
+                scanner.close();
+                break;
             }
-        } else {
-            System.out.println("Exiting the system. Goodbye!");
-            scanner.close();
         }
     }
-
 }
