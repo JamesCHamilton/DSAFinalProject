@@ -13,9 +13,11 @@ public class Main {
             System.out.println("\nEnter (1) if you are a Customer, (2) if you are an Employee, or ANYTHING else to exit:");
             String choice = scanner.nextLine();
 
-            if (choice.equals("1")) customerMenu(scanner, employee);
-            else if (choice.equals("2")) employeeMenu(scanner, employee);
-            else {
+            if (choice.equals("1")) {
+                customerMenu(scanner, employee);
+            } else if (choice.equals("2")) {
+                employeeMenu(scanner, employee);
+            } else {
                 System.out.println("Exiting the system. Goodbye!");
                 break;
             }
@@ -28,10 +30,14 @@ public class Main {
             System.out.println("\nCustomer Menu:");
             System.out.println("1. Rent a Video");
             System.out.println("2. Return a Video");
-            System.out.println("3. Exit");
+            System.out.println("3. Check movies owned");
+            System.out.println("4. View Available Videos");
+            System.out.println("5. View Customers");
+            System.out.println("6. Exit");
+
 
             String choice = scanner.nextLine();
-            if (choice.equals("3")) break;
+            if (choice.equals("6")) break;
 
             System.out.print("Enter your phone number: ");
             String phoneNumber = scanner.nextLine();
@@ -42,12 +48,22 @@ public class Main {
                     System.out.print("Enter video barcode: ");
                     String barcode = scanner.nextLine();
                     String title = employee.getVideoTitle(barcode);
-                    if (title != null) customer.rent(new Video(title, barcode));
-                    else System.out.println("Video does not exist.");
+                    if (title != null) {
+                        customer.rent(new Video(title, barcode));
+                    } else {
+                        System.out.println("Video does not exist.");
+                    }
                 } else if (choice.equals("2")) {
                     System.out.print("Enter video barcode: ");
                     String barcode = scanner.nextLine();
-                    customer.returnMovie(new Video("Temp", barcode));
+                    if (customer.ownedMovies.containsKey(barcode)) {
+                        customer.returnMovie(new Video("Temp", barcode));
+                    } else {
+                        System.out.println("You have not rented this video.");
+                    }
+                } else if (choice.equals("3")) {
+                    System.out.println("Rented Videos:");
+                    customer.printOwnedMovies();
                 }
             } else {
                 System.out.println("Invalid phone number.");
@@ -60,7 +76,7 @@ public class Main {
             System.out.println("\nEmployee Menu:");
             System.out.println("1. Add a Customer");
             System.out.println("2. Add a Video");
-            System.out.println("3. Search for a Movie");
+            System.out.println("3. Search for a Movie Renter");
             System.out.println("4. Exit");
 
             String choice = scanner.nextLine();
@@ -79,11 +95,21 @@ public class Main {
                 String title = scanner.nextLine();
                 System.out.print("Enter barcode: ");
                 String barcode = scanner.nextLine();
-                employee.addVideo(new Video(title, barcode));
+                if (employee.isValidTitle(title) && employee.isValidBarcode(barcode)) {
+                    employee.addVideo(new Video(title, barcode));
+                } else {
+                    System.out.println("Invalid title or barcode. Please try again.");
+                }
             } else if (choice.equals("3")) {
                 System.out.print("Enter movie title to search: ");
                 String title = scanner.nextLine();
-                employee.searchForRenter(title);
+                System.out.println(employee.searchForRenter(title));
+            }else if (choice.equals("4")) {
+                System.out.println("Available Videos:");
+                employee.videos();
+            } else if (choice.equals("5")) {
+                System.out.println("Customer List:");
+                employee.customers();
             }
         }
     }

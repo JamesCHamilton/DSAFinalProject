@@ -25,14 +25,14 @@ public class Employee {
         if(validateVideo(video)){
             videolist.put(video.getBarcode(), video.getMovieTitle());
             System.out.println("Successfully added a video");
+        }else {
+            System.out.println("Invalid video. Please check the title and barcode.");
         }
     }
     //O(m) m = movieTitle length 
     private boolean titleValidatorHelper(String movieTitle){
-        if(movieTitle.strip().equalsIgnoreCase(null) || movieTitle.strip().isBlank()){
-            return false;
-        }
-        return true;
+        return (movieTitle != null && !movieTitle.strip().isBlank());
+            
     }
     //O(1)
     private boolean barcodeValidator(String barcode){
@@ -41,10 +41,7 @@ public class Employee {
 
     //O(1) + O(m) = O(m) cause of titleValidatorHelper
     private boolean validateVideoHelper(Video video){
-        if(titleValidatorHelper(video.getMovieTitle()) && barcodeValidator(video.getBarcode())){
-            return true;
-        }
-        return false;
+        return titleValidatorHelper(video.getMovieTitle()) && barcodeValidator(video.getBarcode());
     }
 
     //O(n+m)
@@ -57,6 +54,7 @@ public class Employee {
         customerList.printTable();
     }
 
+    //O(1) for average case, O(n) for worst case
     private boolean videoExists(String barcode){
         return videolist.containsKey(barcode);
     }
@@ -67,7 +65,7 @@ public class Employee {
             System.out.println("Customer with this phone number already exists.");
             return;
         }
-        customerList.put(phoneNumber.trim(), new Customer(phoneNumber, firstName, lastName));
+        customerList.put(phoneNumber.trim(), new Customer(phoneNumber, firstName, lastName, this));
         System.out.println("Successfully added customer");
         
     }
@@ -100,6 +98,8 @@ public class Employee {
 
         return "No one has rented this movie.";
     }
+
+    //O(1) for average case, O(n) for worst case
     private String videoTitle(String barcode){
         Object[] videoData = videolist.get(barcode);
         if (videoData != null && videoData[0] instanceof String) {
@@ -107,6 +107,8 @@ public class Employee {
         }
         return null;
     }
+
+    //O(1) for average case, O(n) for worst case
     private Customer customerFetcher(String phoneNumber) {
         if (customerList.containsKey(phoneNumber)) {
             return (Customer) customerList.get(phoneNumber)[0];
