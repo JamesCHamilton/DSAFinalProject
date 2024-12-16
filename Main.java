@@ -27,18 +27,18 @@ public class Main {
                 switch (customerChoice) {
                     case 1: // Rent a Video
                         System.out.print("Enter your phone number: ");
-                        Long phoneNumber = scanner.nextLong();
+                        String phoneNumber = scanner.nextLine();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter the video barcode: ");
                         String movieBarcode = scanner.nextLine();
 
-                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(choice)) {
+                        if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(phoneNumber)) {
                             if (employee.videolist.containsKey(movieBarcode)) {
                                 Video videoToRent = new Video(
                                     (String) employee.videolist.get(movieBarcode)[0], 
                                     movieBarcode
                                 );
-                                Customer customer = (Customer) employee.customerList.get(String.valueOf(phoneNumber))[0];
+                                Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
                                 customer.rent(videoToRent, phoneNumber, movieBarcode);
                             } else {
                                 System.out.println("The video does not exist in the system.");
@@ -50,13 +50,13 @@ public class Main {
 
                     case 2: // Return a Video
                         System.out.print("Enter your phone number: ");
-                        phoneNumber = scanner.nextLong();
+                        phoneNumber = scanner.nextLine();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter the video barcode: ");
                         movieBarcode = scanner.nextLine();
 
                         if (employee.phoneNumberValidator(phoneNumber) && employee.isNumberValid(phoneNumber)) {
-                            Customer customer = (Customer) employee.customerList.get(String.valueOf(phoneNumber))[0];
+                            Customer customer = (Customer) employee.customerList.get(phoneNumber)[0];
                             Video videoToReturn = new Video((String) customer.ownedMovies.get(movieBarcode)[0],movieBarcode);
                             customer.returnMovie(videoToReturn, phoneNumber, movieBarcode);
                         } else {
@@ -90,7 +90,7 @@ public class Main {
                 switch (employeeChoice) {
                     case 1: // Add a Customer
                         System.out.print("Enter phone number: ");
-                        long phoneNumber = scanner.nextLong();
+                        String phoneNumber = scanner.nextLine();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter first name: ");
                         String firstName = scanner.nextLine();

@@ -2,7 +2,7 @@ package DSAFinalProject;
 
 
 public class Customer {
-    private long phoneNumber;
+    private String phoneNumber;
     private String firstName;
     private String lastName;
     private final int MAXRENTABLEMOVIES = 3;
@@ -10,17 +10,17 @@ public class Customer {
     HashTable ownedMovies = new HashTable();
     Employee employee = new Employee();
     
-    public Customer(long phoneNumber, String firstName, String lastName){
+    public Customer(String phoneNumber, String firstName, String lastName){
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public void rent(Video video, long phoneNumber, String movieBarcode){rentHelper(video, phoneNumber, movieBarcode);}
-    public void returnMovie(Video video, long phoneNumber, String movieBarcode){returnHelepr(video, phoneNumber, movieBarcode);}
+    public void rent(Video video, String phoneNumber, String movieBarcode){rentHelper(video, phoneNumber, movieBarcode);}
+    public void returnMovie(Video video, String phoneNumber, String movieBarcode){returnHelepr(video, phoneNumber, movieBarcode);}
 
     //O(n)
-    private void rentHelper(Video video, long phoneNumber, String movieBarcode){
+    private void rentHelper(Video video, String phoneNumber, String movieBarcode){
 
         if (ownedMovies.containsKey(movieBarcode)) {
             System.out.println("You have already rented this movie.");
@@ -47,7 +47,7 @@ public class Customer {
     }
 
     //O(n)
-    private void returnHelepr(Video video, long phoneNumber, String movieBarcode){
+    private void returnHelepr(Video video, String phoneNumber, String movieBarcode){
         if(employee.phoneNumberValidator(phoneNumber)){
             if(ownedMovies.containsKey(movieBarcode)){
                 ownedMovies.remove(movieBarcode);
@@ -63,5 +63,5 @@ public class Customer {
 
     public String getFirstName() {return firstName;}
     public String getLastName() {return lastName;}
-    public long getPhoneNumber() {return phoneNumber;}
+    public String getPhoneNumber() {return phoneNumber;}
 }

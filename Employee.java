@@ -2,14 +2,14 @@ package DSAFinalProject;
 
 public class Employee {
 
-    public void addCustomer(long phoneNumber, String firstName, String lastName){addCustomerHelper(phoneNumber, firstName, lastName);}
+    public void addCustomer(String phoneNumber, String firstName, String lastName){addCustomerHelper(phoneNumber, firstName, lastName);}
     public void addVideo(Video video){addVideoHelper(video);}    
     public void videos(){printVideos();}
     public boolean isValidTitle(Video video){return titleValidatorHelper(video);}
     public boolean isValidBarcode(Video video){return barcodeValidator(video);}
     public boolean validateVideo(Video video){return validateVideoHelper(video);}
-    public boolean phoneNumberValidator(long phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
-    public boolean isNumberValid(long phoneNumber){return isValidPhoneNumberHelper(phoneNumber);}
+    public boolean phoneNumberValidator(String phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
+    public boolean isNumberValid(String phoneNumber){return isValidPhoneNumberHelper(phoneNumber);}
     public String searchForRenter(String movieTitle){return searchRenterHelper(movieTitle);}
 
 
@@ -51,21 +51,21 @@ public class Employee {
     }
 
     //O(1) for average case, O(n) for worst case
-    private void addCustomerHelper(long phoneNumber, String firstName, String lastName){
-        if (customerList.containsKey(String.valueOf(phoneNumber))) {
+    private void addCustomerHelper(String phoneNumber, String firstName, String lastName){
+        if (customerList.containsKey(phoneNumber)) {
             System.out.println("Customer with this phone number already exists.");
             return;
         }
-        customerList.put(String.valueOf(phoneNumber), new Customer(phoneNumber, firstName, lastName));
+        customerList.put(phoneNumber, new Customer(phoneNumber, firstName, lastName));
         
     }
     //O(1) for average case, O(n) for worst case
-    private boolean phoneNumberValidatorHelper(long phoneNumber){
-        return customerList.containsKey(String.valueOf(phoneNumber));
+    private boolean phoneNumberValidatorHelper(String phoneNumber){
+        return customerList.containsKey(phoneNumber);
     }
 
-    private boolean isValidPhoneNumberHelper(long phoneNumber){
-        return Long.toString(phoneNumber).length() == 10; 
+    private boolean isValidPhoneNumberHelper(String phoneNumber){
+        return phoneNumber.length() == 10; 
     }
 
     //O(n+m)
