@@ -2,13 +2,13 @@ package DSAFinalProject;
 
 public class Employee {
 
-    public void addCustomer(int phoneNumber, String firstName, String lastName){addCustomerHelper(phoneNumber, firstName, lastName);}
+    public void addCustomer(long phoneNumber, String firstName, String lastName){addCustomerHelper(phoneNumber, firstName, lastName);}
     public void addVideo(Video video){addVideoHelper(video);}    
     public void videos(){printVideos();}
     public boolean isValidTitle(Video video){return titleValidatorHelper(video);}
     public boolean isValidBarcode(Video video){return barcodeValidator(video);}
     public boolean validateVideo(Video video){return validateVideoHelper(video);}
-    public boolean phoneNumberValidator(int phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
+    public boolean phoneNumberValidator(long phoneNumber){return phoneNumberValidatorHelper(phoneNumber);}
     public String searchForRenter(String movieTitle){return searchRenterHelper(movieTitle);}
 
 
@@ -50,7 +50,7 @@ public class Employee {
     }
 
     //O(1) for average case, O(n) for worst case
-    private void addCustomerHelper(int phoneNumber, String firstName, String lastName){
+    private void addCustomerHelper(long phoneNumber, String firstName, String lastName){
         if (customerList.containsKey(String.valueOf(phoneNumber))) {
             System.out.println("Customer with this phone number already exists.");
             return;
@@ -59,7 +59,7 @@ public class Employee {
         
     }
     //O(1) for average case, O(n) for worst case
-    private boolean phoneNumberValidatorHelper(int phoneNumber){
+    private boolean phoneNumberValidatorHelper(long phoneNumber){
         return customerList.containsKey(String.valueOf(phoneNumber));
     }
 

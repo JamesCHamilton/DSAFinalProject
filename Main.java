@@ -27,7 +27,7 @@ public class Main {
                 switch (customerChoice) {
                     case 1: // Rent a Video
                         System.out.print("Enter your phone number: ");
-                        int phoneNumber = scanner.nextInt();
+                        Long phoneNumber = scanner.nextLong();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter the video barcode: ");
                         String movieBarcode = scanner.nextLine();
@@ -50,7 +50,7 @@ public class Main {
 
                     case 2: // Return a Video
                         System.out.print("Enter your phone number: ");
-                        phoneNumber = scanner.nextInt();
+                        phoneNumber = scanner.nextLong();
                         scanner.nextLine(); // Consume newline
                         System.out.print("Enter the video barcode: ");
                         movieBarcode = scanner.nextLine();

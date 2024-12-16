@@ -9,6 +9,7 @@ public class Video {
         this.movieTitle = movieTitle;
     }
 
+
     private void print(){
         System.out.printf("%s %d", movieTitle, barcode);
     }
