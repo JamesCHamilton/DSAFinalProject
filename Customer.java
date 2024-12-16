@@ -16,22 +16,21 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public void rent(Video video, String phoneNumber, String movieBarcode){rentHelper(video, phoneNumber, movieBarcode);}
-    public void returnMovie(Video video, String phoneNumber, String movieBarcode){returnHelepr(video, phoneNumber, movieBarcode);}
+    public void rent(Video video){rentHelper(video);}
+    public void returnMovie(Video video){returnHelepr(video);}
 
     //O(n)
-    private void rentHelper(Video video, String phoneNumber, String movieBarcode){
+    private void rentHelper(Video video){
 
-        if (ownedMovies.containsKey(movieBarcode)) {
+        if (ownedMovies.containsKey(video.getBarcode())) {
             System.out.println("You have already rented this movie.");
             return;
         }
-        
-        if(employee.phoneNumberValidator(phoneNumber)){
+
             if(moviesOwned < MAXRENTABLEMOVIES){
-                if(employee.videolist.containsKey(movieBarcode)){
+                if(employee.videolist.containsKey(video.getBarcode())){
                     ownedMovies.put(video.getBarcode(), video.getMovieTitle());
-                    employee.videolist.remove(movieBarcode);
+                    employee.videolist.remove(video.getBarcode());
                     System.out.printf("You have rented %s", video.getMovieTitle());
                     moviesOwned++;
                 }
@@ -41,25 +40,19 @@ public class Customer {
             }else{
                 System.out.printf("You can not rent anymore movies. You are currently renting %d", moviesOwned);
             }
-        }else{
-            System.out.println("Invalid phone number");
         }
-    }
 
     //O(n)
-    private void returnHelepr(Video video, String phoneNumber, String movieBarcode){
-        if(employee.phoneNumberValidator(phoneNumber)){
-            if(ownedMovies.containsKey(movieBarcode)){
-                ownedMovies.remove(movieBarcode);
+    private void returnHelepr(Video video){
+            if(ownedMovies.containsKey(video.getBarcode())){
+                ownedMovies.remove(video.getBarcode());
                 employee.videolist.put(video.getBarcode(), video.getMovieTitle());
                 System.out.printf("You have returned %s, Thank you", video.getMovieTitle());
+                moviesOwned--;
             }else{
                 System.out.println("You do not have that movie");
             }
-        }else{
-            System.out.println("Invalid phone number");
         }
-    }
 
     public String getFirstName() {return firstName;}
     public String getLastName() {return lastName;}
